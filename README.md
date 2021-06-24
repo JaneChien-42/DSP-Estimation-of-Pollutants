@@ -163,7 +163,7 @@ Then, let us move to direction. According to C.Y., Lee's masterpiece (2015), the
 
 As a result, we should assign the direction parameters like the block below.
 
-<img src="https://latex.codecogs.com/svg.image?(g^{B_{CO_2}},\ g^{B_{SO_2}},\ g^{B_{NO_x}})=(.048,\ .508,\ .444)" />
+<img src="https://latex.codecogs.com/png.image?(g^{B_{CO_2}},\ g^{B_{SO_2}},\ g^{B_{NO_x}})=(.048,\ .508,\ .444)" />
 
     (g_C, g_S, g_N) = (.048, .508, .444)
 
