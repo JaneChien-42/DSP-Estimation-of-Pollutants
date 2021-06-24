@@ -11,9 +11,13 @@ Coase Theorem寇斯定理
 
 The only thing that EPA should do is to determine the price of polltants. We hope this research can give a good shadow price estimation of pollutants, and can also give an insight to find the trend of polltants emission.
 
-### Problem Definition
+### Objective
 
-要省略嗎？
+Reproduce the Paper:
+
+Lee, Chia-Yen and Peng Zhou, 2015. [Directional Shadow Price Estimation of CO2, SO2 and NOx in the United States Coal Power Industry 1990-2010](http://dx.doi.org/10.1016/j.eneco.2015.08.010). Energy Economics, 51, 493–502.  
+
+### Problem Definition
 
 ## 2 Methodology
 
@@ -24,20 +28,65 @@ We need to follow the step below to find the DSP of pollutants:
 3.  Find the **Directional Marginal Productivity(DMP)** with Raw Data and Frontier Data.
 4.  Find the **Directional Shadow Price(DSP)** based on DMP.
 
-How we collect the data will be introduce in the third part. So following goes into details of the models use in the project.
+How we collect the data will be introduced in the third part. So following goes into details of the models use in the project.
 
 ### Directional Distance Function(DDF)
 
-(General模型圖片放在這)
+DDF is one of DEA models. So here we can find the efficiency of each firm with DDF method. With the efficiency, next is to project the raw data to the frontier line, and that is the frontier data we need in the DMP calculation.
 
-(模型圖片放在這)
+#### Indices
+<img src="https://latex.codecogs.com/svg.image?i" />: the input  
+$j$: the output  
+$q$: the undesirable output  
+$k$: the firm
 
-### Dirational Marginal Productivity(DMP)
-(模型圖片放在這)
+#### Sets
+$I$: Input, $i\in I$  
+$J$: Output, $j\in J$  
+$Q$: Pollutants, $q\in Q$  
+$K$: States in US, $k\in K$
+
+#### Parameters
+$X_{ik}$: $i$th input of firm k  
+$Y_{jk}$: $j$th good output of firm k  
+$B_{qk}$: $q$th bad output of firm k  
+$g^{Y_j}$: direction of $j$th good output  
+$g^{B_q}$: direction of $q$th bad output
+
+#### Decision Variables
+
+$\lambda$λ: intensity weights representing the convex combination between firms  
+$\mu$μ: intensity weights representing the convex combination between firms  
+$\eta$η: efficiency  
+
+#### DDF Model
+
+Below is a general form of DDF in the paper.
+
+![](https://i.imgur.com/O80gA0P.png =200x)
+
+### Directional Marginal Productivity(DMP)
+
+#### Calculate v
+
+![](https://i.imgur.com/AqspGSq.png =200x)
+
+
+#### DMP
+
+$(g^{Y_j} Y^{Max}_j,-g^{B_q}B^{Max}_q)\times v_{i^*}/X^{Max}_{i^*}$
+
+#### GMP
+
+$g^{Y_j} Y^{Max}_j\times v_{i^*}/X^{Max}_{i^*}$
+
+#### BMP
+
+$-g^{B_q}B^{Max}_q\times v_{i^*}/X^{Max}_{i^*}$
 
 ### Directional Shadow Price(DSP)
 
-(模型圖片放在這)
+$DSP = Price\times\dfrac{GMP}{BMP}$
 
 ## 3 Example and Applications
 
