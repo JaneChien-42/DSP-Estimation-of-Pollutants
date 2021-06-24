@@ -82,15 +82,15 @@ The table below shows the statiscal information of shadow price during these two
 
 This figure shows the historical shadow prices of CO<sub>2</sub>. No obivous trend during two decades.
 
-![](https://i.imgur.com/d4myGVk.jpg =400x)
+![](https://i.imgur.com/d4myGVk.jpg)
 
 This figure shows SO<sub>2</sub>'s. The shadow prices before 2012 we calculate are more steady compared to those after 2012. Our guess is because of electricity prices go bumpy after that year.
 
-![](https://i.imgur.com/ldPz6ka.jpg =400x)
+![](https://i.imgur.com/ldPz6ka.jpg)
 
 Finally, it's NO<sub>x</sub> turn. The shadow prices before 2012 we observed increased slowly.
 
-![](https://i.imgur.com/Jxy7k5n.jpg =400x)
+![](https://i.imgur.com/Jxy7k5n.jpg)
 
 ## 4 Comments
 
@@ -103,7 +103,6 @@ After showing our empirical study, we have some topics need to discussion.
 As we mentioned above, the shadow prices of three pollutants are outliers. The problem is because the spot price of coal from 5 main mining basin in U.S. rose dramatically that year. From the beginning of 2018 to ending, the coal price in U.S. increased almost 40%.
 
 ![](https://i.imgur.com/HAGXsOg.jpg)
-
 
 ### Distortion after 2012
 
