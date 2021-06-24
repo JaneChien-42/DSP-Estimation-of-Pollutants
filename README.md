@@ -1,12 +1,26 @@
-# Directional Shadow Price Estimation of CO<sub>2</sub>, SO<sub>2</sub>, and NO<sub>x</sub>
+# Directional Shadow Price Estimation of CO~2~, SO~2~, and NO~x~
 
 ## 1 Background and Motivation
+### Background
+
+### Motivation
+
+### Problem Definition
 
 ## 2 Methodology
 
-![equation](http://latex.codecogs.com/gif.latex?O_t%3D%5Ctext%20%7B%20Onset%20event%20at%20time%20bin%20%7D%20t)
+We need to follow the step below to find the DSP of pollutants:
+1.  
 
-![equation](https://latex.codecogs.com/gif.latex?\alpha+\frac{2\beta}{\gamma})
+### DDF
+
+DDF equation
+
+
+
+### DMP
+
+### DSP
 
 ## 3 Example and Applications
 
@@ -94,6 +108,19 @@ We see there is much room for EU to raise their emission taxes. We recommend the
 
 The amount of **natural gas** using for power plant has exceed the amount of coal after 2015 in U.S. Due to coal comsumption having enviroment unfriendly result, U.S. has decide phase out the amount of coal use. In the future, the coal power plant percentage will drop to 0. We need to substitute our model input from coal to natural gas. Othewise, we will have some serious bias in our model. 
 
-
-
 ## Reference
+
+### Data
+
+[Electricity - US Energy Information Administration ](https://www.eia.gov/electricity/)
+
+### Paper 
+1. Lee, Chia-Yen and Peng Zhou, 2015. [Directional Shadow Price Estimation of CO2, SO2 and NOx in the United States Coal Power Industry 1990-2010](http://dx.doi.org/10.1016/j.eneco.2015.08.010). Energy Economics, 51, 493–502.
+2. Wang, K., Y. Xian, Chia-Yen Lee, Y.-M. Wei, Z. Huang, 2019. [On Selecting Directions for Directional Distance Functions in a Non-parametric Framework: A Review](http://dx.doi.org/10.1007/s10479-017-2423-5). Annals of Operations Research, 278 (1-2), 43–76.
+3. Lee, Chia-Yen, 2017. [Directional Marginal Productivity: A Foundation of Meta-Data Envelopment Analysis](http://dx.doi.org/10.1057/s41274-016-0129-8). Journal of the Operational Research Society, 68 (5), 544-555
+
+### Others
+
+1. https://www.eia.gov/todayinenergy/detail.php?id=38132
+3. https://www.eia.gov/todayinenergy/detail.php?id=43675
+4. https://ec.europa.eu/taxation_customs/tedb/legacy/taxDetail.html;jsessionid=KGQu38CJ0JQOAwelO94vqXvGIgetpB_3QcRiWMlXqnaiejuvDs83!-2112365544?id=361/1424159221&taxType=Other%20indirect%20tax
