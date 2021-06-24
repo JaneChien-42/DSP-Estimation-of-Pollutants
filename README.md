@@ -1,26 +1,43 @@
-# Directional Shadow Price Estimation of CO~2~, SO~2~, and NO~x~
+# Directional Shadow Price Estimation of CO<sub>2</sub>, SO<sub>2</sub>, and NO<sub>x</sub>
 
 ## 1 Background and Motivation
 ### Background
 
+第一次工業革命的開始，因為自動化機械化需要大量的電力，因此人類開始使用燃煤來發電。而在近代，因為地球暖化、環保意識抬頭，對於汙染物的管控變成了一大議題。政府(EPA)為了規範發電廠汙染物的產生，......
+
+Coase Theorem寇斯定理
+
 ### Motivation
 
+The only thing that EPA should do is to determine the price of polltants. We hope this research can give a good shadow price estimation of pollutants, and can also give an insight to find the trend of polltants emission.
+
 ### Problem Definition
+
+要省略嗎？
 
 ## 2 Methodology
 
 We need to follow the step below to find the DSP of pollutants:
-1.  
 
-### DDF
+1.  Collect Data as **Raw Data**.
+2.  Project Raw Data to the frontier line with **Directional Distance Function(DDF)** method (To find the **Frontier Data** needede in the next step).
+3.  Find the **Directional Marginal Productivity(DMP)** with Raw Data and Frontier Data.
+4.  Find the **Directional Shadow Price(DSP)** based on DMP.
 
-DDF equation
+How we collect the data will be introduce in the third part. So following goes into details of the models use in the project.
 
+### Directional Distance Function(DDF)
 
+(General模型圖片放在這)
 
-### DMP
+(模型圖片放在這)
 
-### DSP
+### Dirational Marginal Productivity(DMP)
+(模型圖片放在這)
+
+### Directional Shadow Price(DSP)
+
+(模型圖片放在這)
 
 ## 3 Example and Applications
 
@@ -65,22 +82,22 @@ The table below shows the statiscal information of shadow price during these two
 
 This figure shows the historical shadow prices of CO<sub>2</sub>. No obivous trend during two decades.
 
-![](https://i.imgur.com/d4myGVk.jpg)
+![](https://i.imgur.com/d4myGVk.jpg =400x)
 
 This figure shows SO<sub>2</sub>'s. The shadow prices before 2012 we calculate are more steady compared to those after 2012. Our guess is because of electricity prices go bumpy after that year.
 
-![](https://i.imgur.com/ldPz6ka.jpg)
+![](https://i.imgur.com/ldPz6ka.jpg =400x)
 
 Finally, it's NO<sub>x</sub> turn. The shadow prices before 2012 we observed increased slowly.
 
-![](https://i.imgur.com/Jxy7k5n.jpg)
+![](https://i.imgur.com/Jxy7k5n.jpg =400x)
 
 ## 4 Comments
 
 After showing our empirical study, we have some topics need to discussion.
 
 ### Free disposal hull problem
-
+是Free Disposable Hull？
 ### Outlier 2018
 
 As we mentioned above, the shadow prices of three pollutants are outliers. The problem is because the spot price of coal from 5 main mining basin in U.S. rose dramatically that year. From the beginning of 2018 to ending, the coal price in U.S. increased almost 40%.
