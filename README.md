@@ -9,7 +9,7 @@ Coase Theorem寇斯定理
 
 ### Motivation
 
-The only thing that EPA should do is to determine the price of polltants. We hope this research can give a good shadow price estimation of pollutants, and can also give an insight to find the trend of polltants emission.
+The only thing that EPA should do is to determine the price of polltants. We hope this research can give a good shadow price estimation of pollutants, and can also give an insight to find the trend of pollutants emission through the panel analysis.
 
 ### Objective
 
@@ -18,6 +18,7 @@ Reproduce the Paper:
 Lee, Chia-Yen and Peng Zhou, 2015. [Directional Shadow Price Estimation of CO2, SO2 and NOx in the United States Coal Power Industry 1990-2010](http://dx.doi.org/10.1016/j.eneco.2015.08.010). Energy Economics, 51, 493–502.  
 
 ### Problem Definition
+(可以刪掉?)
 
 ## 2 Methodology
 
@@ -35,58 +36,111 @@ How we collect the data will be introduced in the third part. So following goes 
 DDF is one of DEA models. So here we can find the efficiency of each firm with DDF method. With the efficiency, next is to project the raw data to the frontier line, and that is the frontier data we need in the DMP calculation.
 
 #### Indices
-<img src="https://latex.codecogs.com/svg.image?i" />: the input  
-$j$: the output  
-$q$: the undesirable output  
-$k$: the firm
+<img src="https://latex.codecogs.com/svg.image?i" /> : the input  
+<img src="https://latex.codecogs.com/svg.image?j" /> : the output  
+<img src="https://latex.codecogs.com/svg.image?q" /> : the undesirable output  
+<img src="https://latex.codecogs.com/svg.image?k,r" /> : the firm
 
 #### Sets
-$I$: Input, $i\in I$  
-$J$: Output, $j\in J$  
-$Q$: Pollutants, $q\in Q$  
-$K$: States in US, $k\in K$
+<img src="https://latex.codecogs.com/svg.image?I" /> : Input, $i\in I$  
+<img src="https://latex.codecogs.com/svg.image?J" /> : Output, $j\in J$  
+<img src="https://latex.codecogs.com/svg.image?Q" /> : Pollutants, $q\in Q$  
+<img src="https://latex.codecogs.com/svg.image?K" /> : States in US, $k\in K$
 
 #### Parameters
-$X_{ik}$: $i$th input of firm k  
-$Y_{jk}$: $j$th good output of firm k  
-$B_{qk}$: $q$th bad output of firm k  
-$g^{Y_j}$: direction of $j$th good output  
-$g^{B_q}$: direction of $q$th bad output
+<img src="https://latex.codecogs.com/svg.image?X_{ik}" /> : $i$th input of firm k  
+<img src="https://latex.codecogs.com/svg.image?Y_{jk}" /> : $j$th good output of firm k  
+<img src="https://latex.codecogs.com/svg.image?B_{qk}" /> : $q$th bad output of firm k
+
+<img src="https://latex.codecogs.com/svg.image?g^{Y_j}" /> : direction of $j$th good output  
+<img src="https://latex.codecogs.com/svg.image?g^{B_q}" /> : direction of $q$th bad output
 
 #### Decision Variables
 
-$\lambda$λ: intensity weights representing the convex combination between firms  
-$\mu$μ: intensity weights representing the convex combination between firms  
-$\eta$η: efficiency  
+<img src="https://latex.codecogs.com/svg.image?\lambda" /> : intensity weights representing the convex combination between firms  
+<img src="https://latex.codecogs.com/svg.image?\mu" /> : intensity weights representing the convex combination between firms  
+<img src="https://latex.codecogs.com/svg.image?\eta" /> : efficiency  
 
 #### DDF Model
 
 Below is a general form of DDF in the paper.
+(補充說明)
 
 ![](https://i.imgur.com/O80gA0P.png =200x)
 
+And in this study, we want to focus on one input (Coal), one output (Electricity), and three bad outputs(CO2,SO2,NOx) here, so we can simplify the model as:
+
+$\max \eta\\
+s.t.\ \sum_k (\lambda_k+\mu_k)X_k\leq X_r\\
+\qquad \sum_k \lambda_k Y_k \geq Y_r+\eta g^Y\\
+\qquad \sum_k \lambda_k B_{qk} = B_{qr} -\eta g^{B_q} ,\forall q \in Q\\
+\qquad \sum_k (\lambda_k + \mu_k) = 1\\
+\qquad \lambda_k,\mu_k \geq 0, \eta\ is\ free$
+
+With the efficiency $\eta$, we can project raw data to the frontier line. That is, the frontier data will be ${X_i,Y_j + \eta g^Y,B_q-\eta g^B}$, which is the projection of raw data ${X_i,Y_j,B_q}$ to the frontier line.
+
 ### Directional Marginal Productivity(DMP)
+(補充說明)
+#### Parameters
+
+$X_{ik}$ : $i$th input of firm k  
+$Y_{jk}$ : $j$th good output of firm k  
+$B_{qk}$ : $q$th bad output of firm k
+
+$X^{Max}_{i}$ : max value of $i$th input  
+$Y^{Max}_{j}$ : max value of $j$th good output  
+$B^{Max}_{q}$ : max value of $q$th bad output
+
+$g^{Y_j}$ : direction of $j$th good output  
+$g^{B_q}$ : direction of $q$th bad output
+
+$g^{Y_j}$ and $g^{B_q}$ are assign by us. How to give $g^{Y_j}$ and $g^{B_q}$ to calculate the v depends on what direction of marginal productivity we want to find. For example, if we want to find the desirable output Electricity, then we will set $g^{Y_{Elec}}$ as 1, and all the other directions as 0. We will give the details of how to set the value in the DMP calculation formula.
+
+###### Note that the $g^{Y_j}$ and $g^{B_q}$ here are different from the DDF model. We just want to show that these parameter denotes the direction of outputs. In the DDF model, we want to find frontier data, so the direction is for raw data to project to the frontier line. But in the DMP model, the direction is determined by what marginal productivity of output we want to focus on. You can get more detail of that in the paper, but here we just give a simple explainable of direction $g^{Y_j}$ and $g^{B_q}$. Just remember they are totoally different things in DDF and DMP model.
+
+#### Decision Variables
+$v_i$ : Dual multipliers of the input constraints  
+$u_j$ : Dual multipliers of the output constraints  
+$w_q$ : Dual multipliers of the undesirable output constraints  
+$u_0$ : Dual multipliers of convex-combination constraints  
 
 #### Calculate v
+(補充說明)
 
 ![](https://i.imgur.com/AqspGSq.png =200x)
 
+> use frontier data in constraint (1), and raw data in the others
 
 #### DMP
+Having the v of each firm, DMP can be calculated with the formula:
 
 $(g^{Y_j} Y^{Max}_j,-g^{B_q}B^{Max}_q)\times v_{i^*}/X^{Max}_{i^*}$
 
 #### GMP
 
-$g^{Y_j} Y^{Max}_j\times v_{i^*}/X^{Max}_{i^*}$
+Set $g^Y=1, \sum_q g^{B_q}=0:
+
+$GMP = g^{Y_j} Y^{Max}_j\times v_{i^*}/X^{Max}_{i^*}$
 
 #### BMP
 
-$-g^{B_q}B^{Max}_q\times v_{i^*}/X^{Max}_{i^*}$
+Set $g^Y=0, \sum_q g^{B_q}=1$:
+
+$BMP=-g^{B_q}B^{Max}_q\times v_{i^*}/X^{Max}_{i^*}$
 
 ### Directional Shadow Price(DSP)
 
-$DSP = Price\times\dfrac{GMP}{BMP}$
+$p_{b_q} = p_{y_j}\left(\frac{\partial y_j}{\partial x_i}/\frac{\partial b_q}{\partial x_i}\right)$
+
+The $\frac{\partial y_j}{\partial x_i}$ is the MP of desirable output, and the $\frac{\partial b_q}{\partial x_i}$ is the undesirable output. They are the GMP and BMP we have from the DMP model. Thus, make the DSP calculation a more simple formation as:
+
+$DSP_{B_q} = Price_{y_j}\times\dfrac{GMP_{y_j}}{BMP_{B_q}}$
+
+Finally, remember to average the DSP of different firms.
+
+### Summary
+
+Follow the steps above, we can find the DSP of one certain year.
 
 ## 3 Example and Applications
 
@@ -108,6 +162,8 @@ Let's take a look at the raw data in 2019.
 Then, let us move to direction. According to C.Y., Lee's masterpiece (2015), the most robust direction vector is (.048, .508, .444).
 
 As a result, we should assign the direction parameters like the block below.
+
+<img src="https://latex.codecogs.com/svg.image?(g^{B_{CO_2}},\ g^{B_{SO_2}},\ g^{B_{NO_x}})=(.048,\ .508,\ .444)" />
 
     (g_C, g_S, g_N) = (.048, .508, .444)
 
@@ -147,6 +203,7 @@ After showing our empirical study, we have some topics need to discussion.
 
 ### Free disposal hull problem
 是Free Disposable Hull？
+
 ### Outlier 2018
 
 As we mentioned above, the shadow prices of three pollutants are outliers. The problem is because the spot price of coal from 5 main mining basin in U.S. rose dramatically that year. From the beginning of 2018 to ending, the coal price in U.S. increased almost 40%.
