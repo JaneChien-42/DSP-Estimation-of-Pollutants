@@ -67,8 +67,9 @@ Below is a general form of DDF in the paper.
 (補充說明)
 
 ![](https://i.imgur.com/O80gA0P.png =200x)
+<img src="https://i.imgur.com/O80gA0P.png" width="400" alt="一張圖片">
 
-And in this study, we want to focus on one input (Coal), one output (Electricity), and three bad outputs(CO2,SO2,NOx) here, so we can simplify the model as:
+In this study, we want to focus on one input (Coal), one output (Electricity), and three bad outputs(CO2,SO2,NOx) here, so we can simplify the model as:
 
 $\max \eta\\
 s.t.\ \sum_k (\lambda_k+\mu_k)X_k\leq X_r\\
@@ -77,8 +78,10 @@ s.t.\ \sum_k (\lambda_k+\mu_k)X_k\leq X_r\\
 \qquad \sum_k (\lambda_k + \mu_k) = 1\\
 \qquad \lambda_k,\mu_k \geq 0, \eta\ is\ free$
 
-> We use python with PuLP to implement the model.
+> We use python with PuLP to implement the model.  
 > **Xr**, **Yr** and **Br** are in respect of a state's **coal comsumption**, amount of **electricity productivity** and amount of **pollutant emission**. The other 2 parameters, **gY** and **gB**, represent the direction we want to project.
+
+#### python-pulp
 
 ```python
 def DDF(Xr, Yr, Br, gY, gB):
@@ -222,7 +225,7 @@ Then, let us move to direction. According to C.Y., Lee's masterpiece (2015), the
 
 As a result, we should assign the direction parameters like the block below.
 
-<img src="https://latex.codecogs.com/png.image?(g^{B_{CO_2}},\ g^{B_{SO_2}},\ g^{B_{NO_x}})=(.048,\ .508,\ .444)" />
+<img src="https://latex.codecogs.com/svg.image?(g^{B_{CO_2}},g^{B_{SO_2}},g^{B_{NO_x}})=(.048,.508,.444)" />
 
 We use this vector to project our raw data on the efficient frontier. Note that we should calculate the shadow price by efficient power plant. **Projecting step is very important.** 
 After projecting step, we get the frontier data, and we need to plug frontier data into the first constraint (frontier constraint) in GMPv model.
