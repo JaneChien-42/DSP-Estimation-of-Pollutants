@@ -1,21 +1,21 @@
 # Directional Shadow Price Estimation of CO<sub>2</sub>, SO<sub>2</sub>, and NO<sub>x</sub>
 
 ## 1 Background and Motivation
-### Background
+### 1.1 Background
 
 Since the 1st Industrial Revolution in the 18th, the use of electricity has been ubiquitous. With the rapid development of technology, the demand for electricity has been more and more heavy. One way to generate electricity is to burning the coal. However, the by-product of burning coal would pollute the atmosphere, and thus cause some environmental damage. In modern times, people have noticed the severity of pollutant emission, and start to concern for the enviroment issue. 
 
 Government(EPA) has the responsibility to make power plants reduce the pollutants emission by amount or by price. Actually, emission trading is a good way to solve the externality of pollutants. In Coase theorem(寇斯定理), no matter what the allocation of emission trading right is in the beginning, the free market can finally cause an efficient result. And this way is much more easier than other emission control method, because the only thing EPA needs to do is to determine the price of one unit of pollutant.
 
-### Motivation
+### 1.2 Motivation
 
 The only thing that EPA should do is to determine the price of polltants. Therefore, We hope this research can give a good shadow price estimation of pollutants, and can also give an insight to find the trend of pollutants emission through the panel analysis.
 
-### Paper Reproduction
+### 1.3 Paper Reproduction
 
 Lee, Chia-Yen and Peng Zhou, 2015. [Directional Shadow Price Estimation of CO2, SO2 and NOx in the United States Coal Power Industry 1990-2010](http://dx.doi.org/10.1016/j.eneco.2015.08.010). Energy Economics, 51, 493–502.  
 
-### Problem Definition
+### 1.4 Problem Definition
 (可以刪掉?)
 
 ## 2 Methodology
@@ -69,6 +69,7 @@ Take a look at the <img src="https://latex.codecogs.com/svg.image?g^{Y_i}" /> an
 <img src="https://i.imgur.com/qF9Mx0u.png" width="420" >  
 
 In this study, we want to focus on one input (Coal), one output (Electricity), and three bad outputs(CO<sub>2</sub>,SO<sub>2</sub>,NO<sub>x</sub>) here, so we can simplify the model as:
+
 <img src="https://i.imgur.com/Kyofriw.png" width="350" >
 
 #### Source Code(python-pulp)
@@ -181,11 +182,17 @@ With the direction assigned, we can calculate the v in the [above model](#Calcul
 
 <img src="https://latex.codecogs.com/svg.image?GMP=g^{Y_j}Y^{Max}_j\times%20v_{i^*}/X^{Max}_{i^*}" />
 
-> We name the desirable output electricity as good output, and the marginal productivity of that is called GMP.
+> We name the desirable output electricity as good output, and the marginal productivity of that is called GMP. And the undesirable output as bad output, so the the marginal productivity of that is called BMP.
 
 #### BMP
 
-Set <img src="https://latex.codecogs.com/svg.image?g^Y=0,\Sigma_qg^{B_q}=1" />:
+The selection of direction follows the same principle as GMP.
+
+So in the research we set directions:
+
+<img src="https://latex.codecogs.com/svg.image?g^Y=0,\Sigma_qg^{B_q}=1" />:
+
+And thus we can find the BMP:
 
 <img src="https://latex.codecogs.com/svg.image?BMP=-g^{B_q}B^{Max}_q\times%20v_{i^*}/X^{Max}_{i^*}" />
 
@@ -207,7 +214,7 @@ Follow the steps above, we can find the DSP of one certain year.
 
 Our objective is **ESTIMATION OF SHADOW PRICE** of by-product which is made by power plant. After building the model, we put real world data in our model to complete the empirical study. Our model have one input (Coal consumption), one good output (Electricity), and three bad output (CO<sub>2</sub>, SO<sub>2</sub>, and NO<sub>x</sub>).
 
-### Data set
+### 3.1 Data set
 
 We use state level data of coal power plant from USA in 2000-2019. The total number of state is 48, because the data of 2 other state is not applicable. Our data is collect from [U.S. EIA website](https://www.eia.gov/). We merge emissions data (tons), electicity production (MWh), electricity price (dollar per MWh) and coal consumption (tons) as the data set . Please click [here]() for the data. Each worksheet is an annual data with 48 states.
 
@@ -218,7 +225,7 @@ Let's take a look at the raw data in 2019.
 |2019|AL   |14,249,921|26,655,068|20,839,019|6,204|9,905|98.289|
 |.....||||||||
 
-### Choice of direction
+### 3.2 Choice of direction
 
 Then, let us move to direction. According to C.Y., Lee's masterpiece (2015), the most robust direction vector is (.048, .508, .444).
 
@@ -229,7 +236,7 @@ As a result, we should assign the direction parameters like the block below.
 We use this vector to project our raw data on the efficient frontier. Note that we should calculate the shadow price by efficient power plant. **Projecting step is very important.** 
 After projecting step, we get the frontier data, and we need to plug frontier data into the first constraint (frontier constraint) in GMPv model.
 
-### Result of panel data analysis
+### 3.3 Result of panel data analysis
 
 The table below shows the statiscal information of shadow price during these two decades.
 
@@ -257,7 +264,7 @@ Finally, it's NO<sub>x</sub> turn. The shadow prices before 2012 we observed inc
 
 After showing our empirical study, we have some topics need to discussion.
 
-### Free disposable hull problem
+### 4.1 Free disposable hull problem
 
 If choose invalid direction to compute DDF effiency, we will get many states ending up with 0 DMP. The reason is that we project data along output direction on the horizontal part of VRS frontier. DMP means the slope. Moreover, a slope of a horizontal line is actually 0. Look at the figure below, the dash line in the cicle is where free disposable hull happens.
 
@@ -266,7 +273,7 @@ If choose invalid direction to compute DDF effiency, we will get many states end
 ###### Source: ORA 10 DEA slides pp.47 by Dr. Chia-Yen Lee.
 
 
-### Outlier 2018
+### 4.2 Outlier 2018
 
 As we mentioned above, the shadow prices of three pollutants are outliers. The problem is because the spot price of coal from 5 main mining basin in U.S. rose dramatically that year. From the beginning of 2018 to ending, the coal price in U.S. increased almost 40%.
 
@@ -274,11 +281,11 @@ As we mentioned above, the shadow prices of three pollutants are outliers. The p
 
 ###### Source: U.S. EIA
 
-### Distortion after 2012
+### 4.3 Distortion after 2012
 
 Back to see our run chart again. No matter the pollutant is CO<sub>2</sub>, SO<sub>2</sub> or NO<sub>x</sub>, their run chart share the same pattern after 2012. Some exogenous variables had led to this distortion. It probably is because that the coal and electricity price had high variance during those years. Remember, according to our model, the shadow price computing is based on electricity price. The coal price influenced the electricity price, and in the end influenced the shadow price of pollutants.
 
-### Our insight in real world
+### 4.4 Our insight in real world
 
 Echo to our beginning of study, the objective is providing insight of emission trading. Europe union has the most advanced and strictly enviroment protection policy. As this result, we compare our shadow price calculated with EU emission taxes.
 
@@ -290,7 +297,7 @@ Echo to our beginning of study, the objective is providing insight of emission t
 
 We see there is much room for EU to raise their emission taxes. We recommend them raising the taxes to transfer the bad part of externality into manufacturers' production cost. Another view of shadow prices far lager than taxes is because taxes are paid by one single company. However, the shadow prices of pollutant are bear by the whole social (that means everyone on earth). Actually, the shadow prices capture the numerical impact of these pollutant.
 
-### Future work
+### 4.5 Future work
 
 The amount of **natural gas** using for power plant has exceed the amount of coal after 2015 in U.S. Due to coal comsumption having enviroment unfriendly result, U.S. has decide phase out the amount of coal use. In the future, the coal power plant percentage will drop to 0. We need to substitute our model input from coal to natural gas. Othewise, we will have some serious bias in our model. 
 
