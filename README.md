@@ -16,7 +16,8 @@ The only thing that EPA should do is to determine the price of polltants. Theref
 Lee, Chia-Yen and Peng Zhou, 2015. [Directional Shadow Price Estimation of CO2, SO2 and NOx in the United States Coal Power Industry 1990-2010](http://dx.doi.org/10.1016/j.eneco.2015.08.010). Energy Economics, 51, 493–502.  
 
 ### 1.4 Problem Definition
-(可以刪掉?)
+
+We want to calculate the shadow price of emission of pollutant. Traditionl methods try to calculate it individually, and lead to underestimated shadow price. To adjust the shadow price, we assign direction to justify the result.
 
 ## 2 Methodology
 
@@ -216,7 +217,7 @@ Our objective is **ESTIMATION OF SHADOW PRICE** of by-product which is made by p
 
 ### 3.1 Data set
 
-We use state level data of coal power plant from USA in 2000-2019. The total number of state is 48, because the data of 2 other state is not applicable. Our data is collect from [U.S. EIA website](https://www.eia.gov/). We merge emissions data (tons), electicity production (MWh), electricity price (dollar per MWh) and coal consumption (tons) as the data set . Please click [here]() for the data. Each worksheet is an annual data with 48 states.
+We use state level data of coal power plant from USA in 2000-2019. The total number of state is 48, because the data of 2 other state is not applicable. Our data is collect from [U.S. EIA website](https://www.eia.gov/). We merge emissions data (tons), electicity production (MWh), electricity price (dollar per MWh) and coal consumption (tons) as the data set . Please click [here](https://github.com/JaneChien-42/DSP-Estimation-of-Pollutants/blob/master/RawData_Price.xlsx) for the data. Each worksheet is an annual data with 48 states.
 
 Let's take a look at the raw data in 2019.
 |Year|State|Coal|Electricity|CO2 Emissions|SO2 Emissions|NOx Emissions|Price|
