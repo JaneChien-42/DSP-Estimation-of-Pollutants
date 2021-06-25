@@ -3,17 +3,15 @@
 ## 1 Background and Motivation
 ### Background
 
-第一次工業革命的開始，因為自動化機械化需要大量的電力，因此人類開始使用燃煤來發電。而在近代，因為地球暖化、環保意識抬頭，對於汙染物的管控變成了一大議題。政府(EPA)為了規範發電廠汙染物的產生，......
+Since the 1st Industrial Revolution in the 18th, the use of electricity has been ubiquitous. With the rapid development of technology, the demand for electricity has been more and more heavy. One way to generate electricity is to burning the coal. However, the by-product of burning coal would pollute the atmosphere, and thus cause some environmental damage. In modern times, people have noticed the severity of pollutant emission, and start to concern for the enviroment issue. 
 
-Coase Theorem寇斯定理
+Government(EPA) has the responsibility to make power plants reduce the pollutants emission by amount or by price. Actually, emission trading is a good way to solve the externality of pollutants. In Coase theorem(寇斯定理), no matter what the allocation of emission trading right is in the beginning, the free market can finally cause an efficient result. And this way is much more easier than other emission control method, because the only thing EPA needs to do is to determine the price of one unit of pollutant.
 
 ### Motivation
 
-The only thing that EPA should do is to determine the price of polltants. We hope this research can give a good shadow price estimation of pollutants, and can also give an insight to find the trend of pollutants emission through the panel analysis.
+The only thing that EPA should do is to determine the price of polltants. Therefore, We hope this research can give a good shadow price estimation of pollutants, and can also give an insight to find the trend of pollutants emission through the panel analysis.
 
-### Objective
-
-Reproduce the Paper:
+### Paper Reproduction
 
 Lee, Chia-Yen and Peng Zhou, 2015. [Directional Shadow Price Estimation of CO2, SO2 and NOx in the United States Coal Power Industry 1990-2010](http://dx.doi.org/10.1016/j.eneco.2015.08.010). Energy Economics, 51, 493–502.  
 
@@ -31,9 +29,9 @@ We need to follow the step below to find the DSP of pollutants:
 
 How we collect the data will be introduced in the third part. So following goes into details of the models use in the project.
 
-### Directional Distance Function(DDF)
+### 2.1 Directional Distance Function(DDF)
 
-DDF is one of DEA models. So here we can find the efficiency of each firm with DDF method. With the efficiency, next is to project the raw data to the frontier line, and that is the frontier data we need in the DMP calculation.
+DDF is one of DEA models. So here we can find the efficiency of each firm based on DDF. With the efficiency, next is to project the raw data to the frontier line, and that is the frontier data we need in the DMP calculation.
 
 #### Indices
 <img src="https://latex.codecogs.com/svg.image?i" /> : the input  
@@ -63,20 +61,15 @@ DDF is one of DEA models. So here we can find the efficiency of each firm with D
 
 #### DDF Model
 
-Below is a general form of DDF in the paper.
-(補充說明)
+Below is a general form of DDF in the paper.  
+We called the constraint(1)(2) **Input Constraint**, and (1) use the X we want to consider in the model. The same as the following constraints, so constraint(3)(4) are **Desirable Output Constraint**, and constraint(5)(6) are **Undesirable Output Constraint**. Constraint(1)(3)(5) are the X,Y,B we want to consider, on the contrary, constraint(2)(4)(6) are those we don't sonsider in the model. The last constraint (7) is the **Convex-Combination Constraint**.
 
-<img src="https://i.imgur.com/O80gA0P.png" width="200">
+Take a look at the <img src="https://latex.codecogs.com/svg.image?g^{Y_i}" /> and <img src="https://latex.codecogs.com/svg.image?g^{B_q}" /> in the constraint (3) and (5). They mean the direction that raw data will project to, and we can see that the efficiency is plused in Y and minused in B. For the opposite direction, it is because the undesirable output is a by-product of desirable output, and we want the desirable output higher while the undesirable output could be lower. But notice that the relation between desirable output and undesirable output is not trade-off. In fact, when we increase the desirable output, the undesirable output will increase simultaneously.
 
-In this study, we want to focus on one input (Coal), one output (Electricity), and three bad outputs(CO2,SO2,NOx) here, so we can simplify the model as:
+<img src="https://i.imgur.com/qF9Mx0u.png" width="420" >  
 
-(圖片取代)
-$\max \eta\\
-s.t.\ \sum_k (\lambda_k+\mu_k)X_k\leq X_r\\
-\qquad \sum_k \lambda_k Y_k \geq Y_r+\eta g^Y\\
-\qquad \sum_k \lambda_k B_{qk} = B_{qr} -\eta g^{B_q} ,\forall q \in Q\\
-\qquad \sum_k (\lambda_k + \mu_k) = 1\\
-\qquad \lambda_k,\mu_k \geq 0, \eta\ is\ free$
+In this study, we want to focus on one input (Coal), one output (Electricity), and three bad outputs(CO<sub>2</sub>,SO<sub>2</sub>,NO<sub>x</sub>) here, so we can simplify the model as:
+<img src="https://i.imgur.com/Kyofriw.png" width="350" >
 
 #### Source Code(python-pulp)
 
@@ -108,8 +101,10 @@ def DDF(Xr, Yr, Br, gY, gB):
 
 With the efficiency <img src="https://latex.codecogs.com/svg.image?\eta" />, we can project raw data to the frontier line. That is, the frontier data will be <img src="https://latex.codecogs.com/svg.image?{X_i,Y_j+\eta%20g^Y,B_q-\eta%20g^B}" />, which is the projection of raw data <img src="https://latex.codecogs.com/svg.image?{X_i,Y_j,B_q}" /> to the frontier line.
 
-### Directional Marginal Productivity(DMP)
-(補充說明)
+### 2.2 Directional Marginal Productivity(DMP)
+
+We need to find the v for each firm first, and then follow the formula in [2.2.2](###2.2.2-DMP) to get the DMP.
+
 #### Parameters
 
 <img src="https://latex.codecogs.com/svg.image?X_{ik}" /> : ith input of firm k  
@@ -133,14 +128,15 @@ With the efficiency <img src="https://latex.codecogs.com/svg.image?\eta" />, we 
 <img src="https://latex.codecogs.com/svg.image?w_q" /> : Dual multipliers of the undesirable output constraints  
 <img src="https://latex.codecogs.com/svg.image?u_0" /> : Dual multipliers of convex-combination constraints  
 
-#### Calculate v
-(補充說明)
+#### 2.2.1 Calculate v
 
-<img src="https://i.imgur.com/AqspGSq.png" width="450">
+This model is actually a dual form of [DDF model](#DDF-Model). But we need to make sure that the firm focused on is an efficiency firm. So let <img src="https://latex.codecogs.com/svg.image?\Sigma_iv_iX_{ir}+\Sigma_ju_jY_{jr}+\Sigma_qw_qB_{qr}+u_0=0" />, r is the firm on the frontier line. And the objective function will be <img src="https://latex.codecogs.com/svg.image?v_i" /> .
+
+<img src="https://i.imgur.com/AqspGSq.png" width="450" >
 
 > **Use frontier data in constraint (1), and raw data in the others.**
 
-#### Source Code(python+pulp)
+#### Source Code (python+pulp)
 
 **NX, NY and NB** is normalized raw data. On the other side, **NXr, NftYr, NftBr** are for a state who stands on frontier line.
 
@@ -169,7 +165,7 @@ def DMPv(NX, NY, NB, NXr, NftYr, NftBr, gY, gB):
     return (value(DMPv.objective))
 ```
 
-#### DMP
+#### 2.2.2 DMP
 Having the v of each firm, DMP can be calculated with the formula:
 
 <img src="https://latex.codecogs.com/svg.image?(g^{Y_j}Y^{Max}_j,-g^{B_q}B^{Max}_q)\times%20v_{i^*}/X^{Max}_{i^*}" />
@@ -177,9 +173,9 @@ Having the v of each firm, DMP can be calculated with the formula:
 All firms would like to increase the desirable output(Electricity), while decrease the undesireable output(pollutants). We give the opposite direction of Y and B in the DMP calculation.
 
 #### GMP
-If we want to find the marginal productivity of good outputs, we should set <img src="https://latex.codecogs.com/svg.image?\sum_ig^{Y_i}=1" /> and <img src="https://latex.codecogs.com/svg.image?\sum_qg^{B_q}=0" />. Here we have only one desirable output -- Electricity, so we set the direction as:
+If we want to find the marginal productivity of good outputs, we should set <img src="https://latex.codecogs.com/svg.image?\Sigma_ig^{Y_i}=1" /> and <img src="https://latex.codecogs.com/svg.image?\Sigma_qg^{B_q}=0" />. Here we have only one desirable output -- Electricity, so we set the direction as:
 
-<img src="https://latex.codecogs.com/svg.image?g^{Y}=1,\sum_qg^{B_q}=0" />
+<img src="https://latex.codecogs.com/svg.image?g^{Y}=1,\Sigma_qg^{B_q}=0" />
 
 With the direction assigned, we can calculate the v in the [above model](#Calculate-v). After calculating the v, we can find the GMP by the formula:
 
@@ -189,11 +185,11 @@ With the direction assigned, we can calculate the v in the [above model](#Calcul
 
 #### BMP
 
-Set <img src="https://latex.codecogs.com/svg.image?g^Y=0,\sum_qg^{B_q}=1" />:
+Set <img src="https://latex.codecogs.com/svg.image?g^Y=0,\Sigma_qg^{B_q}=1" />:
 
 <img src="https://latex.codecogs.com/svg.image?BMP=-g^{B_q}B^{Max}_q\times%20v_{i^*}/X^{Max}_{i^*}" />
 
-### Directional Shadow Price(DSP)
+### 2.3 Directional Shadow Price(DSP)
 
 <img src="https://latex.codecogs.com/svg.image?p_{b_q}=p_{y_j}\left(\frac{\partial%20y_j}{\partial%20x_i}/\frac{\partial%20b_q}{\partial%20x_i}\right)" />
 
@@ -203,7 +199,7 @@ The <img src="https://latex.codecogs.com/svg.image?\frac{\partial%20y_j}{\partia
 
 Finally, remember to average the DSP of different firms.
 
-### Summary
+### 2.4 Summary
 
 Follow the steps above, we can find the DSP of one certain year.
 
@@ -216,7 +212,7 @@ Our objective is **ESTIMATION OF SHADOW PRICE** of by-product which is made by p
 We use state level data of coal power plant from USA in 2000-2019. The total number of state is 48, because the data of 2 other state is not applicable. Our data is collect from [U.S. EIA website](https://www.eia.gov/). We merge emissions data (tons), electicity production (MWh), electricity price (dollar per MWh) and coal consumption (tons) as the data set . Please click [here]() for the data. Each worksheet is an annual data with 48 states.
 
 Let's take a look at the raw data in 2019.
-|Year|State|Coal|Electicity|CO2 Emissions|SO2 Emissions|NOx Emissions|Price|
+|Year|State|Coal|Electricity|CO2 Emissions|SO2 Emissions|NOx Emissions|Price|
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 |2019|AK   |555,952|683,055|1,399,888|1,928|2,156|202.165|
 |2019|AL   |14,249,921|26,655,068|20,839,019|6,204|9,905|98.289|
@@ -247,19 +243,13 @@ The table below shows the statiscal information of shadow price during these two
 
 This figure shows the historical shadow prices of CO<sub>2</sub>. No obivous trend during two decades.
 
-![](https://i.imgur.com/d4myGVk.jpg)
-
 <img src="https://i.imgur.com/d4myGVk.jpg" width="450">
 
 This figure shows SO<sub>2</sub>'s. The shadow prices before 2012 we calculate are more steady compared to those after 2012. Our guess is because of electricity prices go bumpy after that year.
 
-![](https://i.imgur.com/ldPz6ka.jpg)
-
 <img src="https://i.imgur.com/ldPz6ka.jpg" width="450">
 
 Finally, it's NO<sub>x</sub> turn. The shadow prices before 2012 we observed increased slowly.
-
-![](https://i.imgur.com/Jxy7k5n.jpg)
 
 <img src="https://i.imgur.com/Jxy7k5n.jpg" width="450">
 
@@ -270,8 +260,6 @@ After showing our empirical study, we have some topics need to discussion.
 ### Free disposable hull problem
 
 If choose invalid direction to compute DDF effiency, we will get many states ending up with 0 DMP. The reason is that we project data along output direction on the horizontal part of VRS frontier. DMP means the slope. Moreover, a slope of a horizontal line is actually 0. Look at the figure below, the dash line in the cicle is where free disposable hull happens.
-
-![](https://i.imgur.com/y53T02J.jpg)
 
 <img src="https://i.imgur.com/y53T02J.jpg" width="450">
 
