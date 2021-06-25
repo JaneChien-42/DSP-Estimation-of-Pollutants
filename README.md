@@ -195,11 +195,11 @@ Set <img src="https://latex.codecogs.com/svg.image?g^Y=0,\sum_qg^{B_q}=1" />:
 
 ### Directional Shadow Price(DSP)
 
-<img src="https://latex.codecogs.com/svg.image?p_{b_q}=p_{y_j}\left(\frac{\partial%20y_j}{\partial%20x_i}/\frac{\partial b_q}{\partial%20x_i}\right)" />
+<img src="https://latex.codecogs.com/svg.image?p_{b_q}=p_{y_j}\left(\frac{\partial%20y_j}{\partial%20x_i}/\frac{\partial%20b_q}{\partial%20x_i}\right)" />
 
-The <img src="https://latex.codecogs.com/svg.image?\frac{\partial y_j}{\partial x_i}" /> is the MP of desirable output, and the <img src="https://latex.codecogs.com/svg.image?\frac{\partial b_q}{\partial x_i}" /> is the undesirable output. They are the GMP and BMP we have from the DMP model. Thus, make the DSP calculation a more simple formation as:
+The <img src="https://latex.codecogs.com/svg.image?\frac{\partial%20y_j}{\partial%20x_i}" /> is the MP of desirable output, and the <img src="https://latex.codecogs.com/svg.image?\frac{\partial%20b_q}{\partial%20x_i}" /> is the undesirable output. They are the GMP and BMP we have from the DMP model. Thus, make the DSP calculation a more simple formation as:
 
-<img src="https://latex.codecogs.com/svg.image?DSP_{B_q} = Price_{y_j}\times\dfrac{GMP_{y_j}}{BMP_{B_q}}" />
+<img src="https://latex.codecogs.com/svg.image?DSP_{B_q}%20=%20Price_{y_j}\times\dfrac{GMP_{y_j}}{BMP_{B_q}}" />
 
 Finally, remember to average the DSP of different firms.
 
