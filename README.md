@@ -77,6 +77,32 @@ s.t.\ \sum_k (\lambda_k+\mu_k)X_k\leq X_r\\
 \qquad \sum_k (\lambda_k + \mu_k) = 1\\
 \qquad \lambda_k,\mu_k \geq 0, \eta\ is\ free$
 
+> We use python with PuLP to implement the model.
+> **Xr**, **Yr** and **Br** are in respect of a state's **coal comsumption**, amount of **electricity productivity** and amount of **pollutant emission**. The other 2 parameters, **gY** and **gB**, represent the direction we want to project.
+
+```python
+def DDF(Xr, Yr, Br, gY, gB):
+    # Decision variables
+    Eff = LpVariable('eff', lowBound=None, upBound=None, cat='Continuous')
+    Lambda = LpVariable.dicts('lambda', (K), lowBound=0, upBound=None, cat='Continuous')
+    Mu = LpVariable.dicts('mu', (K), lowBound=0, upBound=None, cat='Continuous')
+
+    DDF = LpProblem('DDF_model', LpMaximize)
+    
+    # Objective function
+    DDF += Eff
+
+    # Constraints
+    DDF += lpSum((Lambda[k]+Mu[k])*X[k] for k in K) <= Xr # I Constraint
+    DDF += lpSum(Lambda[k]*Y[k] for k in K) >= Yr + Eff*gY # GO Constraint
+    for q in Q:
+        modDDFel1 += lpSum(Lambda[k]*B[k,q] for k in K) <= Br[q] - Eff*gB[q] # BO Constraint
+    DDF += lpSum(Lambda[k]+Mu[k] for k in K) == 1 # Convex
+    
+    DDF.solve()
+    return (value(DDF.objective))
+```
+
 With the efficiency $\eta$, we can project raw data to the frontier line. That is, the frontier data will be ${X_i,Y_j + \eta g^Y,B_q-\eta g^B}$, which is the projection of raw data ${X_i,Y_j,B_q}$ to the frontier line.
 
 ### Directional Marginal Productivity(DMP)
@@ -109,18 +135,51 @@ $u_0$ : Dual multipliers of convex-combination constraints
 
 ![](https://i.imgur.com/AqspGSq.png =200x)
 
-> use frontier data in constraint (1), and raw data in the others
+> **Use frontier data in constraint (1), and raw data in the others.**
+> **NX, NY and NB** is normalized raw data. On the other side, **NXr, NftYr, NftBr** are for a state who stands on frontier line.
+
+```python
+def DMPv(NX, NY, NB, NXr, NftYr, NftBr, gY, gB):
+    v = LpVariable('v', lowBound=0, upBound=None, cat='Continuous')
+    u = LpVariable('u', lowBound=0, upBound=None, cat='Continuous')
+    u0 = LpVariable('u0', lowBound=None, upBound=None, cat='Continuous')
+    w = LpVariable.dicts('w', (Q), lowBound=None, upBound=None, cat='Continuous')
+
+    DMPv = LpProblem('DMPv', LpMinimize)
+    
+    # Objective function
+    DMPv += v
+
+    # Constraints
+    DMPv += v*NXr - u*NftYr + lpSum(w[q]*NftBr[q] for q in Q_star) + u0 == 0 # (1)
+    for k in K:
+        nb = NB[k]
+        DMPv += v*NX[k] - u*NY[k] + lpSum(w[q]*nb[q] for q in Q_star) + u0 >= 0 # (2)
+        DMPv += v*NX[k] +u0 >= 0 # (3)
+    DMPv += u*gY + lpSum(w[q]*gB[q] for q in Q_star) == 1 # (4)
+
+    # solve 
+    DMPv.solve()
+    return (value(DMPv.objective))
+```
 
 #### DMP
 Having the v of each firm, DMP can be calculated with the formula:
 
 $(g^{Y_j} Y^{Max}_j,-g^{B_q}B^{Max}_q)\times v_{i^*}/X^{Max}_{i^*}$
 
-#### GMP
+All firms would like to increase the desirable output(Electricity), while decrease the undesireable output(pollutants). We give the opposite direction of Y and B in the DMP calculation.
 
-Set $g^Y=1, \sum_q g^{B_q}=0:
+#### GMP
+If we want to find the marginal productivity of good outputs, we should set $\sum_i g^{Y_i}=1$ and $\sum_q g^{B_q}=0$. Here we have only one desirable output -- Electricity, so we set the direction as:
+
+$g^{Y}=1, \sum_q g^{B_q}=0$
+
+With the direction assigned, we can calculate the v in the [above model](#Calculate-v). After calculating the v, we can find the GMP by the formula:
 
 $GMP = g^{Y_j} Y^{Max}_j\times v_{i^*}/X^{Max}_{i^*}$
+
+> We name the desirable output electricity as good output, and the marginal productivity of that is called GMP.
 
 #### BMP
 
@@ -165,13 +224,8 @@ As a result, we should assign the direction parameters like the block below.
 
 <img src="https://latex.codecogs.com/png.image?(g^{B_{CO_2}},\ g^{B_{SO_2}},\ g^{B_{NO_x}})=(.048,\ .508,\ .444)" />
 
-    (g_C, g_S, g_N) = (.048, .508, .444)
-
 We use this vector to project our raw data on the efficient frontier. Note that we should calculate the shadow price by efficient power plant. **Projecting step is very important.** 
-After projecting step, we get the frontier data, and we need to plug frontier data into the first constraint (frontier constraint) in model (3).
-
-### Tutorial step by step
-哈哈哈哈哈
+After projecting step, we get the frontier data, and we need to plug frontier data into the first constraint (frontier constraint) in GMPv model.
 
 ### Result of panel data analysis
 
@@ -183,7 +237,7 @@ The table below shows the statiscal information of shadow price during these two
 |MEAN|624|17,866|68,118|
 |MAX|1,229|57,987|186,211|
 
-> Hint: We exclude the 2018 result, because it is an outlier and dominance all other years.
+> Note: We exclude the 2018 result, because it is an outlier and dominance all other years.
 
 This figure shows the historical shadow prices of CO<sub>2</sub>. No obivous trend during two decades.
 
@@ -201,14 +255,22 @@ Finally, it's NO<sub>x</sub> turn. The shadow prices before 2012 we observed inc
 
 After showing our empirical study, we have some topics need to discussion.
 
-### Free disposal hull problem
-是Free Disposable Hull？
+### Free disposable hull problem
+
+If choose invalid direction to compute DDF effiency, we will get many states ending up with 0 DMP. The reason is that we project data along output direction on the horizontal part of VRS frontier. DMP means the slope. Moreover, a slope of a horizontal line is actually 0. Look at the figure below, the dash line in the cicle is where free disposable hull happens.
+
+![](https://i.imgur.com/y53T02J.jpg)
+
+###### Source: ORA 10 DEA slides pp.47 by Dr. Chia-Yen Lee.
+
 
 ### Outlier 2018
 
 As we mentioned above, the shadow prices of three pollutants are outliers. The problem is because the spot price of coal from 5 main mining basin in U.S. rose dramatically that year. From the beginning of 2018 to ending, the coal price in U.S. increased almost 40%.
 
 ![](https://i.imgur.com/HAGXsOg.jpg)
+
+###### Source: U.S. EIA
 
 ### Distortion after 2012
 
