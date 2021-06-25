@@ -42,18 +42,18 @@ DDF is one of DEA models. So here we can find the efficiency of each firm with D
 <img src="https://latex.codecogs.com/svg.image?k,r" /> : the firm
 
 #### Sets
-<img src="https://latex.codecogs.com/svg.image?I" /> : Input, $i\in I$  
-<img src="https://latex.codecogs.com/svg.image?J" /> : Output, $j\in J$  
-<img src="https://latex.codecogs.com/svg.image?Q" /> : Pollutants, $q\in Q$  
-<img src="https://latex.codecogs.com/svg.image?K" /> : States in US, $k\in K$
+<img src="https://latex.codecogs.com/svg.image?I" /> : Input, <img src="https://latex.codecogs.com/svg.image?i\in I" />  
+<img src="https://latex.codecogs.com/svg.image?J" /> : Output, <img src="https://latex.codecogs.com/svg.image?j\in J" />  
+<img src="https://latex.codecogs.com/svg.image?Q" /> : Pollutants, <img src="https://latex.codecogs.com/svg.image?q\in Q" />  
+<img src="https://latex.codecogs.com/svg.image?K" /> : States in US, <img src="https://latex.codecogs.com/svg.image?k\in K" />
 
 #### Parameters
-<img src="https://latex.codecogs.com/svg.image?X_{ik}" /> : $i$th input of firm k  
-<img src="https://latex.codecogs.com/svg.image?Y_{jk}" /> : $j$th good output of firm k  
-<img src="https://latex.codecogs.com/svg.image?B_{qk}" /> : $q$th bad output of firm k
+<img src="https://latex.codecogs.com/svg.image?X_{ik}" /> : ith input of firm k  
+<img src="https://latex.codecogs.com/svg.image?Y_{jk}" /> : jth good output of firm k  
+<img src="https://latex.codecogs.com/svg.image?B_{qk}" /> : qth bad output of firm k
 
-<img src="https://latex.codecogs.com/svg.image?g^{Y_j}" /> : direction of $j$th good output  
-<img src="https://latex.codecogs.com/svg.image?g^{B_q}" /> : direction of $q$th bad output
+<img src="https://latex.codecogs.com/svg.image?g^{Y_j}" /> : direction of jth good output  
+<img src="https://latex.codecogs.com/svg.image?g^{B_q}" /> : direction of qth bad output
 
 #### Decision Variables
 
@@ -66,11 +66,11 @@ DDF is one of DEA models. So here we can find the efficiency of each firm with D
 Below is a general form of DDF in the paper.
 (補充說明)
 
-![](https://i.imgur.com/O80gA0P.png =200x)
-<img src="https://i.imgur.com/O80gA0P.png" width="400" alt="一張圖片">
+<img src="https://i.imgur.com/O80gA0P.png" width="200">
 
 In this study, we want to focus on one input (Coal), one output (Electricity), and three bad outputs(CO2,SO2,NOx) here, so we can simplify the model as:
 
+(圖片取代)
 $\max \eta\\
 s.t.\ \sum_k (\lambda_k+\mu_k)X_k\leq X_r\\
 \qquad \sum_k \lambda_k Y_k \geq Y_r+\eta g^Y\\
@@ -78,10 +78,10 @@ s.t.\ \sum_k (\lambda_k+\mu_k)X_k\leq X_r\\
 \qquad \sum_k (\lambda_k + \mu_k) = 1\\
 \qquad \lambda_k,\mu_k \geq 0, \eta\ is\ free$
 
-> We use python with PuLP to implement the model.  
-> **Xr**, **Yr** and **Br** are in respect of a state's **coal comsumption**, amount of **electricity productivity** and amount of **pollutant emission**. The other 2 parameters, **gY** and **gB**, represent the direction we want to project.
+#### Source Code(python-pulp)
 
-#### python-pulp
+We use python with PuLP to implement the model.  
+**Xr**, **Yr** and **Br** are in respect of a state's **coal comsumption**, amount of **electricity productivity** and amount of **pollutant emission**. The other 2 parameters, **gY** and **gB**, represent the direction we want to project.
 
 ```python
 def DDF(Xr, Yr, Br, gY, gB):
@@ -106,40 +106,43 @@ def DDF(Xr, Yr, Br, gY, gB):
     return (value(DDF.objective))
 ```
 
-With the efficiency $\eta$, we can project raw data to the frontier line. That is, the frontier data will be ${X_i,Y_j + \eta g^Y,B_q-\eta g^B}$, which is the projection of raw data ${X_i,Y_j,B_q}$ to the frontier line.
+With the efficiency <img src="https://latex.codecogs.com/svg.image?\eta" />, we can project raw data to the frontier line. That is, the frontier data will be <img src="https://latex.codecogs.com/svg.image?{X_i,Y_j+\eta%20g^Y,B_q-\eta%20g^B}" />, which is the projection of raw data <img src="https://latex.codecogs.com/svg.image?{X_i,Y_j,B_q}" /> to the frontier line.
 
 ### Directional Marginal Productivity(DMP)
 (補充說明)
 #### Parameters
 
-$X_{ik}$ : $i$th input of firm k  
-$Y_{jk}$ : $j$th good output of firm k  
-$B_{qk}$ : $q$th bad output of firm k
+<img src="https://latex.codecogs.com/svg.image?X_{ik}" /> : ith input of firm k  
+<img src="https://latex.codecogs.com/svg.image?Y_{jk}" /> : jth good output of firm k  
+<img src="https://latex.codecogs.com/svg.image?B_{qk}" /> : qth bad output of firm k
 
-$X^{Max}_{i}$ : max value of $i$th input  
-$Y^{Max}_{j}$ : max value of $j$th good output  
-$B^{Max}_{q}$ : max value of $q$th bad output
+<img src="https://latex.codecogs.com/svg.image?X^{Max}_{i}" /> : max value of ith input  
+<img src="https://latex.codecogs.com/svg.image?Y^{Max}_{j}" /> : max value of jth good output  
+<img src="https://latex.codecogs.com/svg.image?B^{Max}_{q}" /> : max value of qth bad output
 
-$g^{Y_j}$ : direction of $j$th good output  
-$g^{B_q}$ : direction of $q$th bad output
+<img src="https://latex.codecogs.com/svg.image?g^{Y_j}" /> : direction of jth good output  
+<img src="https://latex.codecogs.com/svg.image?g^{B_q}" /> : direction of qth bad output
 
-$g^{Y_j}$ and $g^{B_q}$ are assign by us. How to give $g^{Y_j}$ and $g^{B_q}$ to calculate the v depends on what direction of marginal productivity we want to find. For example, if we want to find the desirable output Electricity, then we will set $g^{Y_{Elec}}$ as 1, and all the other directions as 0. We will give the details of how to set the value in the DMP calculation formula.
+<img src="https://latex.codecogs.com/svg.image?g^{Y_j}" /> and <img src="https://latex.codecogs.com/svg.image?g^{B_q}" /> are assign by us. How to give <img src="https://latex.codecogs.com/svg.image?g^{Y_j}" /> and <img src="https://latex.codecogs.com/svg.image?g^{B_q}" /> to calculate the v depends on what direction of marginal productivity we want to find. For example, if we want to find the desirable output Electricity, then we will set <img src="https://latex.codecogs.com/svg.image?g^{Y_{Elec}}" /> as 1, and all the other directions as 0. We will give the details of how to set the value in the DMP calculation formula.
 
 ###### Note that the $g^{Y_j}$ and $g^{B_q}$ here are different from the DDF model. We just want to show that these parameter denotes the direction of outputs. In the DDF model, we want to find frontier data, so the direction is for raw data to project to the frontier line. But in the DMP model, the direction is determined by what marginal productivity of output we want to focus on. You can get more detail of that in the paper, but here we just give a simple explainable of direction $g^{Y_j}$ and $g^{B_q}$. Just remember they are totoally different things in DDF and DMP model.
 
 #### Decision Variables
-$v_i$ : Dual multipliers of the input constraints  
-$u_j$ : Dual multipliers of the output constraints  
-$w_q$ : Dual multipliers of the undesirable output constraints  
-$u_0$ : Dual multipliers of convex-combination constraints  
+<img src="https://latex.codecogs.com/svg.image?v_i" /> : Dual multipliers of the input constraints  
+<img src="https://latex.codecogs.com/svg.image?u_j" /> : Dual multipliers of the output constraints  
+<img src="https://latex.codecogs.com/svg.image?w_q" /> : Dual multipliers of the undesirable output constraints  
+<img src="https://latex.codecogs.com/svg.image?u_0" /> : Dual multipliers of convex-combination constraints  
 
 #### Calculate v
 (補充說明)
 
-![](https://i.imgur.com/AqspGSq.png =200x)
+<img src="https://i.imgur.com/AqspGSq.png" width="450">
 
 > **Use frontier data in constraint (1), and raw data in the others.**
-> **NX, NY and NB** is normalized raw data. On the other side, **NXr, NftYr, NftBr** are for a state who stands on frontier line.
+
+#### Source Code(python+pulp)
+
+**NX, NY and NB** is normalized raw data. On the other side, **NXr, NftYr, NftBr** are for a state who stands on frontier line.
 
 ```python
 def DMPv(NX, NY, NB, NXr, NftYr, NftBr, gY, gB):
@@ -169,34 +172,34 @@ def DMPv(NX, NY, NB, NXr, NftYr, NftBr, gY, gB):
 #### DMP
 Having the v of each firm, DMP can be calculated with the formula:
 
-$(g^{Y_j} Y^{Max}_j,-g^{B_q}B^{Max}_q)\times v_{i^*}/X^{Max}_{i^*}$
+<img src="https://latex.codecogs.com/svg.image?(g^{Y_j}Y^{Max}_j,-g^{B_q}B^{Max}_q)\times%20v_{i^*}/X^{Max}_{i^*}" />
 
 All firms would like to increase the desirable output(Electricity), while decrease the undesireable output(pollutants). We give the opposite direction of Y and B in the DMP calculation.
 
 #### GMP
-If we want to find the marginal productivity of good outputs, we should set $\sum_i g^{Y_i}=1$ and $\sum_q g^{B_q}=0$. Here we have only one desirable output -- Electricity, so we set the direction as:
+If we want to find the marginal productivity of good outputs, we should set <img src="https://latex.codecogs.com/svg.image?\sum_ig^{Y_i}=1" /> and <img src="https://latex.codecogs.com/svg.image?\sum_qg^{B_q}=0" />. Here we have only one desirable output -- Electricity, so we set the direction as:
 
-$g^{Y}=1, \sum_q g^{B_q}=0$
+<img src="https://latex.codecogs.com/svg.image?g^{Y}=1,\sum_qg^{B_q}=0" />
 
 With the direction assigned, we can calculate the v in the [above model](#Calculate-v). After calculating the v, we can find the GMP by the formula:
 
-$GMP = g^{Y_j} Y^{Max}_j\times v_{i^*}/X^{Max}_{i^*}$
+<img src="https://latex.codecogs.com/svg.image?GMP=g^{Y_j}Y^{Max}_j\times%20v_{i^*}/X^{Max}_{i^*}" />
 
 > We name the desirable output electricity as good output, and the marginal productivity of that is called GMP.
 
 #### BMP
 
-Set $g^Y=0, \sum_q g^{B_q}=1$:
+Set <img src="https://latex.codecogs.com/svg.image?g^Y=0,\sum_qg^{B_q}=1" />:
 
-$BMP=-g^{B_q}B^{Max}_q\times v_{i^*}/X^{Max}_{i^*}$
+<img src="https://latex.codecogs.com/svg.image?BMP=-g^{B_q}B^{Max}_q\times%20v_{i^*}/X^{Max}_{i^*}" />
 
 ### Directional Shadow Price(DSP)
 
-$p_{b_q} = p_{y_j}\left(\frac{\partial y_j}{\partial x_i}/\frac{\partial b_q}{\partial x_i}\right)$
+<img src="https://latex.codecogs.com/svg.image?p_{b_q}=p_{y_j}\left(\frac{\partial%20y_j}{\partial%20x_i}/\frac{\partial b_q}{\partial%20x_i}\right)" />
 
-The $\frac{\partial y_j}{\partial x_i}$ is the MP of desirable output, and the $\frac{\partial b_q}{\partial x_i}$ is the undesirable output. They are the GMP and BMP we have from the DMP model. Thus, make the DSP calculation a more simple formation as:
+The <img src="https://latex.codecogs.com/svg.image?\frac{\partial y_j}{\partial x_i}" /> is the MP of desirable output, and the <img src="https://latex.codecogs.com/svg.image?\frac{\partial b_q}{\partial x_i}" /> is the undesirable output. They are the GMP and BMP we have from the DMP model. Thus, make the DSP calculation a more simple formation as:
 
-$DSP_{B_q} = Price_{y_j}\times\dfrac{GMP_{y_j}}{BMP_{B_q}}$
+<img src="https://latex.codecogs.com/svg.image?DSP_{B_q} = Price_{y_j}\times\dfrac{GMP_{y_j}}{BMP_{B_q}}" />
 
 Finally, remember to average the DSP of different firms.
 
@@ -246,13 +249,19 @@ This figure shows the historical shadow prices of CO<sub>2</sub>. No obivous tre
 
 ![](https://i.imgur.com/d4myGVk.jpg)
 
+<img src="https://i.imgur.com/d4myGVk.jpg" width="450">
+
 This figure shows SO<sub>2</sub>'s. The shadow prices before 2012 we calculate are more steady compared to those after 2012. Our guess is because of electricity prices go bumpy after that year.
 
 ![](https://i.imgur.com/ldPz6ka.jpg)
 
+<img src="https://i.imgur.com/ldPz6ka.jpg" width="450">
+
 Finally, it's NO<sub>x</sub> turn. The shadow prices before 2012 we observed increased slowly.
 
 ![](https://i.imgur.com/Jxy7k5n.jpg)
+
+<img src="https://i.imgur.com/Jxy7k5n.jpg" width="450">
 
 ## 4 Comments
 
@@ -263,6 +272,8 @@ After showing our empirical study, we have some topics need to discussion.
 If choose invalid direction to compute DDF effiency, we will get many states ending up with 0 DMP. The reason is that we project data along output direction on the horizontal part of VRS frontier. DMP means the slope. Moreover, a slope of a horizontal line is actually 0. Look at the figure below, the dash line in the cicle is where free disposable hull happens.
 
 ![](https://i.imgur.com/y53T02J.jpg)
+
+<img src="https://i.imgur.com/y53T02J.jpg" width="450">
 
 ###### Source: ORA 10 DEA slides pp.47 by Dr. Chia-Yen Lee.
 
