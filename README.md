@@ -42,10 +42,10 @@ DDF is one of DEA models. So here we can find the efficiency of each firm with D
 <img src="https://latex.codecogs.com/svg.image?k,r" /> : the firm
 
 #### Sets
-<img src="https://latex.codecogs.com/svg.image?I" /> : Input, <img src="https://latex.codecogs.com/svg.image?i\in I" />  
-<img src="https://latex.codecogs.com/svg.image?J" /> : Output, <img src="https://latex.codecogs.com/svg.image?j\in J" />  
-<img src="https://latex.codecogs.com/svg.image?Q" /> : Pollutants, <img src="https://latex.codecogs.com/svg.image?q\in Q" />  
-<img src="https://latex.codecogs.com/svg.image?K" /> : States in US, <img src="https://latex.codecogs.com/svg.image?k\in K" />
+<img src="https://latex.codecogs.com/svg.image?I" /> : Input, <img src="https://latex.codecogs.com/svg.image?i\in%20I" />  
+<img src="https://latex.codecogs.com/svg.image?J" /> : Output, <img src="https://latex.codecogs.com/svg.image?j\in%20J" />  
+<img src="https://latex.codecogs.com/svg.image?Q" /> : Pollutants, <img src="https://latex.codecogs.com/svg.image?q\in%20Q" />  
+<img src="https://latex.codecogs.com/svg.image?K" /> : States in US, <img src="https://latex.codecogs.com/svg.image?k\in%20K" />
 
 #### Parameters
 <img src="https://latex.codecogs.com/svg.image?X_{ik}" /> : ith input of firm k  
